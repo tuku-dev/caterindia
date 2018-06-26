@@ -2,7 +2,7 @@
 @section('title') {{ $seo_info[0]->meta_title.' || Restaurant Items' }} @stop
 @section('keywords'){{ $seo_info[0]->meta_keyword }} @stop
 @section('description'){{ $seo_info[0]->meta_descr }} @stop
-@section('content') 
+@section('content')
 <!-- Breadcrumb Start -->
 <div class="bread-crumb">
   <div class="container">
@@ -30,13 +30,15 @@
 <div class="newd">
   <div class="container">
     <div class="row">
-      <div class="col-md-4 tio"> <img src="{{ asset('public/restaurant') }}/{{ $restaurant->image }}"/> </div>
+      <div class="col-md-4 tio"> <img src="{{ asset('public/restaurant') }}/{{ $restaurant->image }}" class="img-fluid pl-30 pr-30"/> </div>
       <div class="col-md-8">
         <h1 title="{{ $restaurant->restaurant_name }}" class="">{{ $restaurant->restaurant_name }}</h1>
-        <div class="">{{ $restaurant->description }}</div>
-        <i class="icofont icofont-star"></i> </span>{{ $restaurant->rating }}</span>
-        <div class="">{{ $restaurant->delivery_time }} MINS</div>
-        <div class="">Delivery Time</div>
+        <div class="description">{{ $restaurant->description }}</div>
+        <ul class="list-inline">
+        <li class="list-inline-item"><i class="icofont icofont-star"></i> </span>{{ $restaurant->rating }}</span></li>
+        <li class="list-inline-item">{{ $restaurant->delivery_time }} MINS</li>
+        <li class="list-inline-item">Delivery Time</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -46,20 +48,20 @@
 <div class="shop">
   <div class="container">
     <div class="row">
-      <div class="col-md-3"> 
+      <div class="col-md-3">
         <!-- Left Filter Start -->
         <div class="left-side">
 
-            <ul class="list-unstyled">
-            @php 
-              $cat_data = DB::table('category')->where('restaurant_id', '=', $restaurant->rest_id)->get();  
-              foreach($cat_data as $res_category){ 
+            <ul class="list-block left-navigation">
+            @php
+              $cat_data = DB::table('category')->where('restaurant_id', '=', $restaurant->rest_id)->get();
+              foreach($cat_data as $res_category){
             @endphp
               <li><a href="javascript:void(0);">{{ $res_category->category_name }}</a>
                 <ul>
-                @php 
-                  $sub_cat_data = DB::table('subcategory')->where('restaurant_id', '=', $restaurant->rest_id)->where('cate_id','=',$res_category->category_id)->get();  
-                  foreach($sub_cat_data as $res_sub_cat){ 
+                @php
+                  $sub_cat_data = DB::table('subcategory')->where('restaurant_id', '=', $restaurant->rest_id)->where('cate_id','=',$res_category->category_id)->get();
+                  foreach($sub_cat_data as $res_sub_cat){
                 @endphp
                   <li><a href="javascript:void(0);">{{ $res_sub_cat->subcategory_name }}</a></li>
                 @php } @endphp
@@ -69,7 +71,7 @@
             </ul>
 
         </div>
-        <!-- Left Filter End --> 
+        <!-- Left Filter End -->
       </div>
       <div class="col-md-9 mainpage">
         <div class="row">
@@ -80,18 +82,18 @@
             <div>
               <h3>{{ $res_cat->category_name }}</h3>
             </div>
-        @php 
+        @php
           $pro_sub_cat = DB::table('subcategory')->where('restaurant_id', '=', $restaurant->rest_id)->where('cate_id','=',$res_cat->category_id)->get();
-          foreach($pro_sub_cat as $pro_subcate){ 
+          foreach($pro_sub_cat as $pro_subcate){
           $pro_count = DB::table('product')->where('restaurant_id', '=', $restaurant->rest_id)->where('subcategory_id', '=', $pro_subcate->sub_caid)->count();
         @endphp
           <div>
             <h6>{{ $pro_subcate->subcategory_name }}</h6>
             <p>{{ $pro_count }} ITEMS</p>
           </div>
-        @php 
-          $product = DB::table('product')->where('restaurant_id', '=', $restaurant->rest_id)->where('category_id','=',$res_cat->category_id)->where('subcategory_id', '=', $pro_subcate->sub_caid)->get();  
-          foreach($product as $res){ 
+        @php
+          $product = DB::table('product')->where('restaurant_id', '=', $restaurant->rest_id)->where('category_id','=',$res_cat->category_id)->where('subcategory_id', '=', $pro_subcate->sub_caid)->get();
+          foreach($product as $res){
         @endphp
           <div class="product-layout product-grid col-lg-4 col-md-4 col-sm-6 col-xs-12">
             <div class="product-thumb">
@@ -116,10 +118,10 @@
        @php } } } @endphp
       </div>
       <div id="productsadded" style="display: none;"><div class="add-cart"><div class="add-cart-txticon"> <i class="icofont icofont-verification-check"></i></div><div class=" add-cart-txt"> Products Added Successfully.</div></div></div>
-        <!-- Product View End --> 
+        <!-- Product View End -->
       </div>
     </div>
   </div>
 </div>
-<!-- Shop End --> 
-@stop 
+<!-- Shop End -->
+@stop
